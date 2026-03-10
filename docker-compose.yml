@@ -1,0 +1,61 @@
+# Real-Time City Waste Collection Management System
+# Distributed services: planning, operations, analytics, frontend
+version: "3.8"
+
+services:
+  planning-service:
+    build: ./planning-service
+    ports:
+      - "8000:8000"
+    volumes:
+      - planning-data:/app/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  operations-service:
+    build: ./operations-service
+    ports:
+      - "8001:8001"
+    environment:
+      - PLANNING_SERVICE_URL=http://planning-service:8000
+    volumes:
+      - operations-data:/app/data
+    depends_on:
+      - planning-service
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/api/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  analytics-service:
+    build: ./analytics-service
+    ports:
+      - "8002:8002"
+    environment:
+      - OPERATIONS_SERVICE_URL=http://operations-service:8001
+      - PLANNING_SERVICE_URL=http://planning-service:8000
+    depends_on:
+      - planning-service
+      - operations-service
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8002/api/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - planning-service
+      - operations-service
+      - analytics-service
+
+volumes:
+  planning-data:
+  operations-data:

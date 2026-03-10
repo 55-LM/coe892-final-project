@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'The 2K12';
+  src: url('/fonts/The2K12.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'The Led Display St';
+  src: url('/fonts/TheLedDisplaySt.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Exwayer';
+  src: url('/fonts/exwayer.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Qood';
+  src: url('/fonts/Qood.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Supply Mono - main app font */
+@font-face {
+  font-family: 'Supply Mono';
+  src: url('/fonts/PPSupplyMono-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Supply Mono';
+  src: url('/fonts/PPSupplyMono-Ultralight.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Supply Sans - optional for headings */
+@font-face {
+  font-family: 'Supply Sans';
+  src: url('/fonts/PPSupplySans-Regular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Supply Sans';
+  src: url('/fonts/PPSupplySans-Ultralight.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  margin: 0;
+  font-family: 'Supply Mono', 'Consolas', 'Monaco', monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @apply bg-zinc-950 text-zinc-100;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+/* Page content: ultralight by default; regular weight for larger text */
+main h1,
+main h2,
+main h3,
+main h4,
+main [class*="text-lg"],
+main [class*="text-xl"],
+main [class*="text-2xl"],
+main [class*="text-3xl"] {
+  font-weight: 400;
+}
+
+/* Dark theme form controls */
+input[type="date"],
+select {
+  @apply bg-zinc-800 border-zinc-600 text-zinc-100 rounded;
+}
+input[type="date"]:focus,
+select:focus {
+  @apply outline-none ring-1 ring-zinc-500 border-zinc-500;
+}
