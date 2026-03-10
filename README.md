@@ -42,13 +42,9 @@ The system is split into four components:
 
 ## How to Run the System
 
-### Option 1: Docker Compose (recommended)
+### Option 1: Docker Compose
 
 From the project root:
-
-```bash
-docker compose up --build
-```
 
 - **Frontend**: http://localhost:80  
 - **Planning API**: http://localhost:8000  
@@ -62,25 +58,10 @@ The frontend at port 80 is served by nginx, which proxies `/api/planning`, `/api
 1. **Backend (three terminals)**  
    Create a virtualenv in each service directory and run:
 
-   ```bash
-   # Terminal 1 - Planning
-   cd planning-service && pip install -r requirements.txt && uvicorn main:app --reload --port 8000
-
-   # Terminal 2 - Operations (ensure Planning is running)
-   cd operations-service && pip install -r requirements.txt && set PLANNING_SERVICE_URL=http://localhost:8000 && uvicorn main:app --reload --port 8001
-
-   # Terminal 3 - Analytics
-   cd analytics-service && pip install -r requirements.txt && set OPERATIONS_SERVICE_URL=http://localhost:8001 && set PLANNING_SERVICE_URL=http://localhost:8000 && uvicorn main:app --reload --port 8002
-   ```
-
    On Linux/macOS use `export` instead of `set`.
 
 2. **Frontend**  
    Uses Vite proxy to forward `/api/planning`, `/api/operations`, `/api/analytics` to the backends:
-
-   ```bash
-   cd frontend && npm install && npm run dev
-   ```
 
    Open http://localhost:5173
 
@@ -127,32 +108,9 @@ The frontend at port 80 is served by nginx, which proxies `/api/planning`, `/api
 - **Database**: SQLite (per service that needs persistence).
 - **Containerization**: Docker and Docker Compose.
 
-## Project Structure
-
-```
-coe892project/
-  planning-service/     # City data, schedules, routes
-  operations-service/   # Pickup simulation, events
-  analytics-service/    # Metrics from events + planning data
-  frontend/             # React dashboard
-  docker-compose.yml
-  README.md
-```
-
-## Testing (Backend)
-
-From each service directory (e.g. `planning-service`):
-
-```bash
-pip install pytest httpx
-pytest
-```
-
 Example test (optional): add `tests/test_planning.py` that calls `GET /api/health` and `GET /api/neighbourhoods` and asserts status 200.
 
 ## Scope and Limitations
 
-- **In scope**: Mock data, weekly schedule, simple ordered routes, pickup simulation, dashboard with metrics and charts, Docker, clear separation of services.
+- **In scope**: Mock data, weekly schedule, simple ordered routes, pickup simulation, dashboard with metrics and charts, Docker, separation of services.
 - **Out of scope**: Advanced route optimization, authentication, message queues, production-grade cloud infrastructure.
-
-This prototype is intended for a **course demo**: it shows a distributed, microservice-inspired design applied to a concrete coordination problem (city waste collection) and remains manageable for a student project.
