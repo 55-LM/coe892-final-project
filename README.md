@@ -9,14 +9,13 @@
 - **Frontend**: React 18, Vite, Tailwind CSS, Recharts, React Router.
 - **Backend**: Python 3.11, FastAPI, SQLAlchemy, Pydantic.
 - **Database**: SQLite (per service that needs persistence).
-- **Containerization**: Docker and Docker Compose.
 
 ## How to Run the System
 
 From the **project root** (the folder that contains `planning-service`, `operations-service`, `analytics-service`, and `frontend`).  
 **Prerequisites:** Python 3.11+ with `pip`, and [Node.js](https://nodejs.org/) (for `npm`).
 
-Run the stack in **four terminals** (local development, no Docker). Start services in order **1 → 2 → 3 → 4**. The first time, run `pip install` / `npm install` in each folder; after that you can skip those steps.
+Run the stack in **four terminals**. Start services in order **1 then 2 then 3 then 4**. The first time, run `pip install` / `npm install` in each folder; after that you can skip those steps.
 
 #### Windows (PowerShell)
 
