@@ -27,7 +27,7 @@ export default function DashboardHome() {
       .finally(() => setLoading(false))
   }, [])
 
-  // Refetch whenever user navigates to the dashboard so metrics stay up to date
+  //refetch whenever user navigates to the dashboard so metrics stay up to date
   useEffect(() => {
     if (location.pathname === '/') {
       fetchSummary()

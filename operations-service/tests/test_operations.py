@@ -1,9 +1,3 @@
-"""
-Basic tests for Operations Service API.
-Run from operations-service: pytest
-Note: simulate-route requires Planning Service; these tests only hit local endpoints.
-"""
-
 import pytest
 from fastapi.testclient import TestClient
 

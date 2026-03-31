@@ -1,7 +1,5 @@
-"""
-Data models for the Planning Service.
-Represents city structure: neighbourhoods, houses, collection rules, schedules, and routes.
-"""
+#Data models for the Planning Service
+#Represents city structure which includes neighbourhoods, houses, collection rules, schedules, and routes
 
 from datetime import date, time
 from enum import Enum
@@ -11,13 +9,10 @@ from pydantic import BaseModel, Field
 
 
 class WasteType(str, Enum):
-    """Supported waste types for collection."""
     garbage = "garbage"
     recycling = "recycling"
     organics = "organics"
 
-
-# --- Request/Response DTOs ---
 
 class NeighbourhoodBase(BaseModel):
     name: str
@@ -54,10 +49,10 @@ class House(HouseBase):
 
 class CollectionRuleBase(BaseModel):
     waste_type: WasteType
-    assigned_day: int  # 0=Monday .. 4=Friday
+    assigned_day: int  # 0=Monday to 4=Friday
     frequency: str = "weekly"
-    allowed_time_start: str = "07:00"  # 7 AM
-    allowed_time_end: str = "17:00"   # 5 PM
+    allowed_time_start: str = "07:00"  #7 AM
+    allowed_time_end: str = "17:00"   #5 PM
 
 
 class CollectionRule(CollectionRuleBase):
@@ -71,7 +66,7 @@ class WeeklyScheduleItem(BaseModel):
     id: Optional[int] = None
     neighbourhood_id: int
     waste_type: WasteType
-    scheduled_day: int  # 0=Monday .. 4=Friday
+    scheduled_day: int 
 
     class Config:
         from_attributes = True
@@ -99,10 +94,10 @@ class Route(RouteBase):
 
 
 class GenerateScheduleRequest(BaseModel):
-    week_start: Optional[date] = None  # defaults to current week
+    week_start: Optional[date] = None  
 
 
 class GenerateRouteRequest(BaseModel):
     date: date
-    neighbourhood_id: Optional[int] = None  # if None, generate for all
-    waste_type: Optional[WasteType] = None  # if None, generate for all types that day
+    neighbourhood_id: Optional[int] = None  
+    waste_type: Optional[WasteType] = None  

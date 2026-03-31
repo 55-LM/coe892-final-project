@@ -1,11 +1,11 @@
-# Frontend - React dashboard (build then serve with nginx)
+#Frontend is essentially aReact dashboard 
 FROM node:20-alpine AS builder
 
 WORKDIR /app
 COPY package.json package-lock.json* ./
 RUN npm install
 COPY . .
-# Point to backend services (same host in Docker; browser will use relative URLs if served behind same origin)
+#Point to backend services 
 ENV VITE_PLANNING_API=/api/planning
 ENV VITE_OPERATIONS_API=/api/operations
 ENV VITE_ANALYTICS_API=/api/analytics
@@ -13,7 +13,7 @@ RUN npm run build
 
 FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
-# Proxy API calls to backend services
+#Proxy API calls to backend services
 RUN echo 'server { \
   listen 80; \
   root /usr/share/nginx/html; \

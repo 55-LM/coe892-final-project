@@ -1,8 +1,6 @@
-"""
-Analytics Service - Entry point.
-Reads pickup events from Operations and city data from Planning; computes and exposes metrics.
-Part of the distributed Real-Time City Waste Collection Management System.
-"""
+#Analytics Service 
+#Reads pickup events from Operations and city data from Planning and computes and shows metrics
+
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware

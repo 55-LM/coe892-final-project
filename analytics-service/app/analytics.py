@@ -1,8 +1,4 @@
-"""
-Analytics logic: fetches pickup events from Operations Service and
-house/neighbourhood data from Planning Service, then computes metrics.
-Demonstrates distributed data flow: operations -> analytics, planning -> analytics.
-"""
+#Analytics fetches pickup events from Operations Service and house/neighbourhood data from Planning Service, then computes metrics
 
 import os
 from collections import defaultdict
@@ -14,7 +10,7 @@ PLANNING_SERVICE_URL = os.environ.get("PLANNING_SERVICE_URL", "http://localhost:
 
 
 def fetch_pickup_events(limit: int = 5000) -> list[dict]:
-    """Fetch all pickup events from Operations Service."""
+    #fetch all pickup events from Operations Service
     try:
         with httpx.Client(timeout=15.0) as client:
             r = client.get(f"{OPERATIONS_SERVICE_URL}/api/pickup-events", params={"limit": limit})
@@ -26,7 +22,7 @@ def fetch_pickup_events(limit: int = 5000) -> list[dict]:
 
 
 def fetch_houses() -> list[dict]:
-    """Fetch houses from Planning Service (for house_id -> neighbourhood_id)."""
+    #fetch houses from Planning Service 
     try:
         with httpx.Client(timeout=10.0) as client:
             r = client.get(f"{PLANNING_SERVICE_URL}/api/houses")
@@ -38,7 +34,7 @@ def fetch_houses() -> list[dict]:
 
 
 def fetch_neighbourhoods() -> list[dict]:
-    """Fetch neighbourhoods from Planning Service."""
+    #fetch neighbourhoods from Planning Service
     try:
         with httpx.Client(timeout=10.0) as client:
             r = client.get(f"{PLANNING_SERVICE_URL}/api/neighbourhoods")
@@ -50,7 +46,7 @@ def fetch_neighbourhoods() -> list[dict]:
 
 
 def fetch_routes_count() -> int:
-    """Optional: count of routes from Planning (e.g. for 'active' count)."""
+    #count of routes from Planning
     try:
         with httpx.Client(timeout=10.0) as client:
             r = client.get(f"{PLANNING_SERVICE_URL}/api/routes")

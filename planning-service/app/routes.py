@@ -1,7 +1,5 @@
-"""
-REST API routes for the Planning Service.
-Exposes neighbourhoods, houses, schedule generation, and route generation.
-"""
+#REST API routes for the Planning Service
+#Exposes neighbourhoods, houses, schedule generation, and route generation
 
 from datetime import date
 from typing import Optional
@@ -77,7 +75,7 @@ def list_houses(
     neighbourhood_id: Optional[int] = Query(None),
     db: Session = Depends(get_db),
 ):
-    """List houses, optionally filtered by neighbourhood."""
+    #list houses, optionally filtered by neighbourhood
     q = db.query(HouseModel)
     if neighbourhood_id is not None:
         q = q.filter(HouseModel.neighbourhood_id == neighbourhood_id)
@@ -90,7 +88,6 @@ def generate_schedule(
     body: Optional[GenerateScheduleRequest] = None,
     db: Session = Depends(get_db),
 ):
-    """Generate weekly collection schedule. Optionally specify week_start."""
     week_start = body.week_start if body else None
     created = generate_weekly_schedule(db, week_start)
     db.commit()
@@ -102,7 +99,6 @@ def get_schedule(
     week_start: Optional[date] = Query(None),
     db: Session = Depends(get_db),
 ):
-    """Get weekly schedule. If week_start not given, use current week."""
     from .scheduler import get_week_start
     ws = week_start or get_week_start(date.today())
     rows = db.query(WeeklyScheduleModel).filter(WeeklyScheduleModel.week_start == ws).all()
@@ -114,7 +110,6 @@ def generate_route(
     body: GenerateRouteRequest,
     db: Session = Depends(get_db),
 ):
-    """Generate daily routes for a given date. Optionally filter by neighbourhood or waste type."""
     nid = body.neighbourhood_id
     wt = body.waste_type.value if body.waste_type else None
     created = generate_daily_routes(db, body.date, neighbourhood_id=nid, waste_type=wt)
@@ -128,7 +123,6 @@ def list_routes(
     neighbourhood_id: Optional[int] = Query(None),
     db: Session = Depends(get_db),
 ):
-    """List routes, optionally by date and/or neighbourhood."""
     q = db.query(RouteModel)
     if date_param is not None:
         q = q.filter(RouteModel.date == date_param)
@@ -140,7 +134,6 @@ def list_routes(
 
 @router.get("/routes/{route_id}", response_model=Route)
 def get_route(route_id: int, db: Session = Depends(get_db)):
-    """Get a single route by ID."""
     r = db.query(RouteModel).filter(RouteModel.id == route_id).first()
     if not r:
         raise HTTPException(status_code=404, detail="Route not found")

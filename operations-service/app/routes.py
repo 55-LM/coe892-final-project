@@ -1,7 +1,5 @@
-"""
-REST API routes for the Operations Service.
-Pickup events and route simulation.
-"""
+#REST API routes for the Operations Service
+#Pickup events and route simulation
 
 from datetime import datetime
 from typing import Optional
@@ -37,7 +35,7 @@ def simulate_route_endpoint(
     route_id: int,
     db: Session = Depends(get_db),
 ):
-    """Simulate waste collection for a route; creates pickup events."""
+    #simulate waste collection for a route and creates pickup events
     total, completed, missed, delayed = simulate_route(db, route_id)
     if total == 0:
         raise HTTPException(
@@ -59,7 +57,7 @@ def create_pickup_event(
     body: PickupEventCreate,
     db: Session = Depends(get_db),
 ):
-    """Manually record a pickup event (e.g. from external system)."""
+    #record a pickup event 
     from datetime import datetime
     event = PickupEventModel(
         route_id=body.route_id,
@@ -80,7 +78,7 @@ def list_pickup_events(
     limit: int = Query(500, le=5000),
     db: Session = Depends(get_db),
 ):
-    """List pickup events, optionally filtered by route_id."""
+    #list pickup events filtered by route_id
     q = db.query(PickupEventModel).order_by(PickupEventModel.timestamp.desc())
     if route_id is not None:
         q = q.filter(PickupEventModel.route_id == route_id)
@@ -90,6 +88,6 @@ def list_pickup_events(
 
 @router.get("/pickup-events/route/{route_id}", response_model=list[PickupEvent])
 def list_pickup_events_by_route(route_id: int, db: Session = Depends(get_db)):
-    """List all pickup events for a specific route."""
+    #list all pickup events for a specific route
     rows = db.query(PickupEventModel).filter(PickupEventModel.route_id == route_id).order_by(PickupEventModel.timestamp).all()
     return [event_to_pydantic(r) for r in rows]

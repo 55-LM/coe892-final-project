@@ -1,12 +1,6 @@
-"""
-Basic tests for Planning Service API.
-Run from planning-service: pytest
-"""
-
 import pytest
 from fastapi.testclient import TestClient
 
-# Import after setting up path so app can load
 import sys
 import os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -29,7 +23,6 @@ def test_neighbourhoods():
     assert r.status_code == 200
     data = r.json()
     assert isinstance(data, list)
-    # Seed creates 5 neighbourhoods
     assert len(data) >= 1
     assert "name" in data[0] and "id" in data[0]
 

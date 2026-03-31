@@ -1,8 +1,5 @@
-"""
-Data models for the Operations Service.
-Pickup events and simulation requests. Does not store city/route structure;
-that comes from the Planning Service via API or passed payloads.
-"""
+#Data models for the Operations Service for pickup events and simulation requests
+#Does not store city/route structure that comes from the Planning Service via API
 
 from datetime import datetime
 from enum import Enum

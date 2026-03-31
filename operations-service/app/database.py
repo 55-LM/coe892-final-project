@@ -1,6 +1,4 @@
-"""
-Database for Operations Service - stores pickup events only.
-"""
+#Database for Operations Service which stores pickup events only
 
 import os
 from datetime import datetime

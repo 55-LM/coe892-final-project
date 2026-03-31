@@ -1,5 +1,5 @@
-# Real-Time City Waste Collection Management System
-# Distributed services: planning, operations, analytics, frontend
+#City Waste Collection Management System
+#Services: planning, operations, analytics, frontend
 version: "3.8"
 
 services:

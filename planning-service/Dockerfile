@@ -1,4 +1,4 @@
-# Planning Service - City data, schedules, routes
+#Planning Service - City data, schedules, routes
 FROM python:3.11-slim
 
 WORKDIR /app
@@ -7,7 +7,6 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
-# Persist SQLite data in /app/data
 ENV PYTHONUNBUFFERED=1
 
 EXPOSE 8000

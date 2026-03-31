@@ -1,8 +1,7 @@
 /**
- * API client for the distributed backend services.
- * Planning (8000), Operations (8001), Analytics (8002).
- * In dev with Vite proxy: use /api/planning, /api/operations, /api/analytics.
- * In Docker: use same paths if frontend is served with nginx proxy, or full URLs via env.
+ * API client for all the services
+ * Planning (8000), Operations (8001), Analytics (8002)
+ * So far we have implemented services using Vite proxy /api/planning, /api/operations, /api/analytics
  */
 
 const planningBase = import.meta.env.VITE_PLANNING_API || '/api/planning'
@@ -35,7 +34,7 @@ async function post<T>(base: string, path: string, body?: object): Promise<T> {
   return res.json()
 }
 
-// --- Planning Service ---
+//Planning Service
 export const planningApi = {
   getNeighbourhoods: () => get<{ id: number; name: string }[]>(planningBase, '/neighbourhoods'),
   getHouses: (neighbourhoodId?: number) =>
@@ -76,7 +75,7 @@ export const planningApi = {
     ),
 }
 
-// --- Operations Service ---
+//Operations Service
 export const operationsApi = {
   simulateRoute: (routeId: number) =>
     post<{ route_id: number; events_created: number; completed: number; missed: number; delayed: number }>(
@@ -99,7 +98,7 @@ export const operationsApi = {
     ),
 }
 
-// --- Analytics Service ---
+//Analytics Service
 export const analyticsApi = {
   getSummary: () =>
     get<{ total_pickups_completed: number; total_pickups_missed: number; total_pickups_delayed: number; total_pickups: number; completion_rate: number; active_route_count: number | null }>(

@@ -1,7 +1,5 @@
-"""
-REST API routes for the Analytics Service.
-All metrics are computed by aggregating data from Operations and Planning services.
-"""
+#REST API routes for the Analytics Service
+#metrics are computed by aggregating data from Operations and Planning services
 
 from fastapi import APIRouter, Query
 
@@ -27,7 +25,7 @@ def health():
 
 @router.get("/metrics/summary", response_model=SummaryMetrics)
 def metrics_summary():
-    """Total completed/missed/delayed, completion rate, optional active route count."""
+    #total completed/missed/delayed, completion rate, active route count
     events = fetch_pickup_events()
     routes_count = fetch_routes_count()
     data = compute_summary(events, routes_count=routes_count)
@@ -36,7 +34,7 @@ def metrics_summary():
 
 @router.get("/metrics/by-neighbourhood", response_model=list[NeighbourhoodMetric])
 def metrics_by_neighbourhood():
-    """Breakdown of pickups and completion rate per neighbourhood."""
+    #breakdown of pickups and completion rate by neighbourhood
     events = fetch_pickup_events()
     houses = fetch_houses()
     neighbourhoods = fetch_neighbourhoods()
@@ -46,7 +44,7 @@ def metrics_by_neighbourhood():
 
 @router.get("/metrics/by-waste-type", response_model=list[WasteTypeMetric])
 def metrics_by_waste_type():
-    """Breakdown of pickups and completion rate per waste type."""
+    #breakdown of pickups and completion rate by waste type
     events = fetch_pickup_events()
     data = compute_by_waste_type(events)
     return [WasteTypeMetric(**d) for d in data]
@@ -54,7 +52,7 @@ def metrics_by_waste_type():
 
 @router.get("/metrics/missed-pickups", response_model=list[MissedPickupItem])
 def metrics_missed_pickups(limit: int = Query(100, le=500)):
-    """List missed pickup events for follow-up."""
+    #list missed pickup events 
     events = fetch_pickup_events()
     missed = get_missed_pickups(events, limit=limit)
     return [

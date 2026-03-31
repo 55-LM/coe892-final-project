@@ -1,8 +1,6 @@
-"""
-Planning Service - Entry point.
-Responsible for city data, weekly schedules, and daily route generation.
-Part of the distributed Real-Time City Waste Collection Management System.
-"""
+#Planning Service 
+#Responsible for city data, weekly schedules, and daily route generation
+
 
 from contextlib import asynccontextmanager
 
@@ -16,11 +14,9 @@ from app.routes import router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """On startup: init DB and seed mock data if empty."""
     init_db()
     run_seed()
     yield
-    # shutdown if needed
     pass
 
 

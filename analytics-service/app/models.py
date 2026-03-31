@@ -1,7 +1,5 @@
-"""
-Response models for Analytics Service.
-Metrics are computed from Operations (pickup events) and Planning (houses, neighbourhoods).
-"""
+#Response models for Analytics Service
+#Metrics are computed from Operations (pickup events) and Planning (houses, neighbourhoods)
 
 from pydantic import BaseModel
 from typing import Optional
@@ -12,7 +10,7 @@ class SummaryMetrics(BaseModel):
     total_pickups_missed: int
     total_pickups_delayed: int
     total_pickups: int
-    completion_rate: float  # 0-100
+    completion_rate: float 
     active_route_count: Optional[int] = None
 
 

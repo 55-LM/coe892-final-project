@@ -1,8 +1,5 @@
-"""
-Operations Service - Entry point.
-Simulates waste collection, records pickup events (completed/missed/delayed).
-Part of the distributed Real-Time City Waste Collection Management System.
-"""
+#Operations Service 
+#Simulates waste collection, records pickup events (completed/missed/delayed)
 
 from contextlib import asynccontextmanager
 

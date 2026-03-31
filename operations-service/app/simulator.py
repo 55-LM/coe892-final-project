@@ -1,8 +1,6 @@
-"""
-Simulates waste collection for a route: fetches route from Planning Service,
-generates pickup events (completed/missed/delayed) and stores them.
-Reflects near-real-time updates by creating events with timestamps.
-"""
+#Simulates waste collection for a route by fetching route from Planning Service,
+#generates pickup events and stores them
+#Reflects updates by creating events with timestamps
 
 import os
 import random
@@ -14,7 +12,6 @@ from sqlalchemy.orm import Session
 from .database import PickupEventModel
 from .models import PickupStatus
 
-# Planning service base URL (set PLANNING_SERVICE_URL for Docker; default for local)
 PLANNING_SERVICE_URL = os.environ.get("PLANNING_SERVICE_URL", "http://localhost:8000")
 
 
@@ -27,7 +24,6 @@ def fetch_route(route_id: int, base_url: str = PLANNING_SERVICE_URL) -> dict | N
             if r.status_code == 200:
                 return r.json()
     except Exception as e:
-        # Log for debugging (e.g. connection refused if Planning not running)
         import logging
         logging.getLogger(__name__).warning("Failed to fetch route %s from Planning: %s", route_id, e)
     return None
@@ -51,7 +47,7 @@ def simulate_route(
 
     stops = route["stops"]
     waste_type = route.get("waste_type", "garbage")
-    # Simulate start time within 7 AM - 5 PM
+    #simulate start time within 7am to 5pm
     base_time = datetime.utcnow().replace(hour=7, minute=0, second=0, microsecond=0)
     completed = missed = delayed = 0
 
@@ -59,7 +55,7 @@ def simulate_route(
         house_id = stop.get("house_id")
         if house_id is None:
             continue
-        # Random status for simulation
+        #apply random status for simulation
         rnd = random.random()
         if rnd < miss_chance:
             status = PickupStatus.missed
@@ -71,7 +67,7 @@ def simulate_route(
             status = PickupStatus.completed
             completed += 1
 
-        event_time = base_time + timedelta(minutes=i * 3)  # ~3 min per stop
+        event_time = base_time + timedelta(minutes=i * 3)  #each stop is 3 min 
         event = PickupEventModel(
             route_id=route_id,
             house_id=house_id,

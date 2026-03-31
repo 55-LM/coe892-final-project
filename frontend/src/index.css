@@ -34,7 +34,6 @@
   font-display: swap;
 }
 
-/* Supply Mono - main app font */
 @font-face {
   font-family: 'Supply Mono';
   src: url('/fonts/PPSupplyMono-Regular.otf') format('opentype');
@@ -50,7 +49,6 @@
   font-display: swap;
 }
 
-/* Supply Sans - optional for headings */
 @font-face {
   font-family: 'Supply Sans';
   src: url('/fonts/PPSupplySans-Regular.otf') format('opentype');
@@ -78,7 +76,6 @@ body {
   min-height: 100vh;
 }
 
-/* Page content: ultralight by default; regular weight for larger text */
 main h1,
 main h2,
 main h3,
@@ -90,7 +87,6 @@ main [class*="text-3xl"] {
   font-weight: 400;
 }
 
-/* Dark theme form controls */
 input[type="date"],
 select {
   @apply bg-zinc-800 border-zinc-600 text-zinc-100 rounded;
