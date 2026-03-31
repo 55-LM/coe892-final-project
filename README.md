@@ -3,7 +3,6 @@
 - **Planning Service**: Owns city data (neighbourhoods, houses, bin types), collection rules (weekdays, 7 AM–5 PM), and generates weekly schedules and daily routes. Data stored in SQLite.
 - **Operations Service**: Receives route IDs, fetches route details from the Planning Service, simulates pickups per stop, and records events (completed/missed/delayed) in its own SQLite DB. Event data flows to Analytics by API calls.
 - **Analytics Service**: Stateless aggregation; fetches pickup events from Operations and house/neighbourhood data from Planning via HTTP, then computes summary metrics, by-neighbourhood, by-waste-type, and missed-pickup lists.
-- **Frontend**: React + Vite + Tailwind + Recharts. Calls all three backends (via proxy in dev) to display schedule, routes, pickup status, and charts.
 
 ## Tech Stack
 
