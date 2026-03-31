@@ -1,14 +1,14 @@
 # City Waste Collection Management System
 
-- **Planning Service**: Owns city data (neighbourhoods, houses, bin types), collection rules (weekdays, 7 AM–5 PM), and generates weekly schedules and daily routes. Data stored in SQLite.
-- **Operations Service**: Receives route IDs, fetches route details from the Planning Service, simulates pickups per stop, and records events (completed/missed/delayed) in its own SQLite DB. Event data flows to Analytics by API calls.
-- **Analytics Service**: Stateless aggregation; fetches pickup events from Operations and house/neighbourhood data from Planning via HTTP, then computes summary metrics, by-neighbourhood, by-waste-type, and missed-pickup lists.
+- **Planning Service**: Owns city data (neighbourhoods, houses, bin types), collection rules (weekdays, 7am to 5pm), and generates weekly schedules and daily routes. Data stored in SQLite.
+- **Operations Service**: Receives route IDs, fetches route details from the Planning Service, simulates pickups per stop, and records events (completed/missed/delayed) in its own SQLite Database. Event data flows to Analytics by API calls.
+- **Analytics Service**: Fetches pickup events from Operations and house/neighbourhood data from Planning via HTTP, then computes summary metrics, by neighbourhood, by waste type, and missed pickup lists.
 
 ## Tech Stack
 
 - **Frontend**: React 18, Vite, Tailwind CSS, Recharts, React Router.
 - **Backend**: Python 3.11, FastAPI, SQLAlchemy, Pydantic.
-- **Database**: SQLite (per service that needs persistence).
+- **Database**: SQLite 
 
 ## How to Run the System
 
